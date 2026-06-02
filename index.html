@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam Seating Plan</title>
+    <link rel="stylesheet" href="2nd.css">
+    <link href="https://cdn.jsdelivr.net/npm/boxicons@2.0.9/css/boxicons.min.css" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="bx bx-menu" id="menu-icon" aria-label="Menu"></div>
+        <nav class="navbar">
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#generate-plan">Generate Plan</a></li>
+                <li><div class="bx bx-moon" id="darkmode" aria-label="Toggle Dark Mode"></div></li>
+            </ul>
+            
+        </nav>
+    </header>
+  
+    <main>
+        <section id="home" class="section1">
+            <h1>Exam Seating Plan Generator</h1>
+            <fieldset class="fieldset1">
+                <legend class="legend1">Enter Details</legend>
+                <ul>
+                    <li><a href="#d1">Enter Room Details</a></li>
+                    <li><a href="#d2">Enter Class/Stream Details</a></li>
+                    <li><a href="#d3">Enter Student Details</a></li>
+                </ul>
+            </fieldset>
+        </section>
+
+        <section class="container" id="d1">
+            <h2>Enter Room Details</h2>
+            <input type="text" id="roomNumber" placeholder="Enter Room Number">
+            <input type="number" id="numberOfSeats" placeholder="Enter Number of Seats">
+            <button class="button" onclick="addRoom()">Add Room</button>
+            <table class="table1">
+                <thead>
+                    <tr>
+                        <th>Sr.No.</th>
+                        <th>Room Number</th>
+                        <th>Number of Seats</th>
+                    </tr>
+                </thead>
+                <tbody id="roomTableBody">
+                   
+                </tbody>
+            </table>
+        </section>
+
+        <!-- <section class="container" id="d2">
+            <h2>Enter Class/Stream Details</h2>
+            <input type="text" id="classStream" placeholder="Enter Class/Stream Name">
+            <button class="button" onclick="addClassStream()">Add Class/Stream</button>
+            <table class="table1">
+                <thead>
+                    <tr>
+                        <th>Sr.No.</th>
+                        <th>Class/Stream</th>
+                    </tr>
+                </thead>
+                <tbody id="classStreamTableBody">
+                    
+                </tbody>
+            </table>
+        </section> -->
+
+        <section class="container" id="d3">
+            <h2>Enter Student Details</h2>
+            <label for="studentClassStream">Class/Stream:</label><br><br>
+            <input type="text" id="studentClassStream" placeholder="Enter Class/Stream">
+            <br><label for="totalStudents">Total Students:</label><br>
+            <br><input type="number" id="totalStudents" placeholder="Enter Total Students">
+            <br><br><label for="startingRollNo">Starting Roll No.:</label><br>
+            <br><input type="text" id="startingRollNo" placeholder="Enter Starting Roll No.">
+            <button class="button" onclick="addStudent()">Add Student</button>
+            <table class="table1">
+                <thead>
+                    <tr>
+                        <th>Sr.No.</th>
+                        <th>Class/Stream</th>
+                        <th>Total Students</th>
+                        <th>Starting Roll No.</th>
+                    </tr>
+                </thead>
+                <tbody id="studentTableBody">
+                 
+                </tbody>
+            </table>
+        </section>
+
+        <section class="container" id="generate-plan">
+            <h2>Generate Seating Plan</h2>
+            <button class="button" onclick="generateSeatingPlan()">Generate Plan</button>
+            <table class="table1" id="seatingPlanTable">
+                <thead>
+                    <tr>
+                        <th>Room Number</th>
+                        <th>Seat No.</th>
+                        <th>Roll No.</th>
+                        <th>Class/Stream</th>
+                    </tr>
+                </thead>
+                <tbody>
+                  
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <script src="2nd.js"></script>
+</body>
+</html>
