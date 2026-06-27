@@ -1,117 +1,429 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Exam Seating Plan</title>
-    <link rel="stylesheet" href="2nd.css">
-    <link href="https://cdn.jsdelivr.net/npm/boxicons@2.0.9/css/boxicons.min.css" rel="stylesheet">
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>EcoPulse | Impact Dashboard</title>
+<!-- Fonts & Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&amp;family=Inter:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary": "#ffffff",
+                    "inverse-surface": "#2d322b",
+                    "surface-tint": "#1b6d24",
+                    "surface-variant": "#e0e4da",
+                    "tertiary-fixed": "#ffdbcf",
+                    "outline-variant": "#bfcaba",
+                    "secondary": "#126d27",
+                    "on-surface": "#181d17",
+                    "on-error": "#ffffff",
+                    "surface-container": "#ebefe5",
+                    "inverse-on-surface": "#eef2e8",
+                    "on-tertiary-fixed": "#2e150b",
+                    "primary-fixed-dim": "#88d982",
+                    "on-tertiary-fixed-variant": "#603f33",
+                    "surface-container-high": "#e5eadf",
+                    "secondary-fixed-dim": "#83da85",
+                    "background": "#f7fbf0",
+                    "on-secondary-fixed-variant": "#005318",
+                    "on-tertiary-container": "#ffeee8",
+                    "tertiary-fixed-dim": "#ebbcac",
+                    "on-primary-fixed": "#002204",
+                    "tertiary-container": "#8b6557",
+                    "surface-dim": "#d7dbd2",
+                    "primary": "#0d631b",
+                    "outline": "#707a6c",
+                    "primary-fixed": "#a3f69c",
+                    "on-background": "#181d17",
+                    "tertiary": "#704d40",
+                    "error": "#ba1a1a",
+                    "on-secondary-container": "#19722b",
+                    "secondary-container": "#9cf49c",
+                    "on-primary-container": "#cbffc2",
+                    "on-primary-fixed-variant": "#005312",
+                    "on-secondary-fixed": "#002105",
+                    "surface-container-highest": "#e0e4da",
+                    "primary-container": "#2e7d32",
+                    "on-tertiary": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "surface-container-lowest": "#ffffff",
+                    "inverse-primary": "#88d982",
+                    "surface-bright": "#f7fbf0",
+                    "surface": "#f7fbf0",
+                    "on-surface-variant": "#40493d",
+                    "surface-container-low": "#f1f5eb",
+                    "secondary-fixed": "#9ff79f",
+                    "on-secondary": "#ffffff",
+                    "error-container": "#ffdad6"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-desktop": "48px",
+                    "unit": "8px",
+                    "container-max": "1280px",
+                    "gutter": "24px",
+                    "margin-mobile": "16px"
+            },
+            "fontFamily": {
+                    "headline-lg": ["Poppins"],
+                    "label-md": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "headline-md": ["Poppins"],
+                    "headline-lg-mobile": ["Poppins"],
+                    "headline-xl": ["Poppins"],
+                    "caption": ["Inter"],
+                    "body-md": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "label-md": ["14px", {"lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                    "headline-xl": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "caption": ["12px", {"lineHeight": "1.4", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 24px;
+            transition: all 0.3s ease;
+        }
+        .glass-card:hover {
+            backdrop-filter: blur(30px);
+            box-shadow: 0px 15px 40px rgba(46, 125, 50, 0.08);
+        }
+        .chart-bar {
+            transform-origin: bottom;
+            animation: growUp 1s ease-out forwards;
+        }
+        @keyframes growUp {
+            from { transform: scaleY(0); }
+            to { transform: scaleY(1); }
+        }
+        .circular-progress {
+            stroke-dasharray: 251.2;
+            stroke-dashoffset: 251.2;
+            animation: progress 1.5s ease-out forwards;
+        }
+        @keyframes progress {
+            to { stroke-dashoffset: 75.36; } /* 70% */
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
 </head>
-<body>
-    <header>
-        <div class="bx bx-menu" id="menu-icon" aria-label="Menu"></div>
-        <nav class="navbar">
-            <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#generate-plan">Generate Plan</a></li>
-                <li><div class="bx bx-moon" id="darkmode" aria-label="Toggle Dark Mode"></div></li>
-            </ul>
+<body class="bg-background text-on-surface font-body-md selection:bg-primary/20">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface/70 dark:bg-surface-dim/70 backdrop-blur-xl border-b border-white/40 dark:border-white/10 shadow-[0px_10px_30px_rgba(46,125,50,0.05)]">
+<nav class="flex justify-between items-center px-margin-mobile md:px-margin-desktop h-16 max-w-container-max mx-auto">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-3xl" data-icon="eco">eco</span>
+<span class="font-headline-md text-headline-md font-bold text-primary">EcoPulse</span>
+</div>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-primary font-bold font-label-md text-label-md" href="#">Home</a>
+<a class="text-on-surface-variant hover:bg-primary-container/20 transition-all duration-300 px-3 py-1 rounded-full font-label-md text-label-md" href="#">Impact</a>
+<a class="text-on-surface-variant hover:bg-primary-container/20 transition-all duration-300 px-3 py-1 rounded-full font-label-md text-label-md" href="#">Volunteer</a>
+<a class="text-on-surface-variant hover:bg-primary-container/20 transition-all duration-300 px-3 py-1 rounded-full font-label-md text-label-md" href="#">Profile</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="active:scale-95 transition-transform p-2 rounded-full text-on-surface-variant hover:bg-primary-container/20">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<div class="w-10 h-10 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-bold">ER</div>
+</div>
+</nav>
+</header>
+<main class="pt-24 pb-32 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
+<!-- Header Section -->
+<section class="mb-16">
+<h1 class="font-headline-xl text-headline-xl text-on-surface mb-2">Earth Revival <span class="text-primary">Impact</span></h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">Visualizing our collective efforts to restore the planet's vitality. Every data point represents a living contribution to our future.</p>
+</section>
+<!-- Stats Grid (Animated Counters) -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-gutter mb-20">
+<div class="glass-card p-8 flex flex-col items-center text-center">
+<div class="w-16 h-16 rounded-2xl bg-secondary-container/30 flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-secondary text-4xl" data-icon="forest">forest</span>
+</div>
+<div class="text-4xl font-headline-xl text-primary mb-1" id="counter-trees">124,500</div>
+<div class="font-label-md text-label-md text-on-surface-variant uppercase tracking-widest">Trees Planted</div>
+</div>
+<div class="glass-card p-8 flex flex-col items-center text-center">
+<div class="w-16 h-16 rounded-2xl bg-tertiary-fixed/30 flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-tertiary text-4xl" data-icon="group">group</span>
+</div>
+<div class="text-4xl font-headline-xl text-primary mb-1" id="counter-volunteers">8,920</div>
+<div class="font-label-md text-label-md text-on-surface-variant uppercase tracking-widest">Active Volunteers</div>
+</div>
+<div class="glass-card p-8 flex flex-col items-center text-center">
+<div class="w-16 h-16 rounded-2xl bg-primary-container/20 flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-primary text-4xl" data-icon="calendar_today">calendar_today</span>
+</div>
+<div class="text-4xl font-headline-xl text-primary mb-1" id="counter-events">452</div>
+<div class="font-label-md text-label-md text-on-surface-variant uppercase tracking-widest">Drives Completed</div>
+</div>
+</section>
+<!-- Middle Section: Chart & CO2 Gauge -->
+<section class="grid grid-cols-1 lg:grid-cols-3 gap-gutter mb-20">
+<!-- Simulated Growth Chart -->
+<div class="lg:col-span-2 glass-card p-8">
+<div class="flex justify-between items-center mb-8">
+<h2 class="font-headline-md text-headline-md text-on-surface">Yearly Plantation Growth</h2>
+<div class="flex gap-2">
+<span class="flex items-center gap-1 text-label-md font-label-md text-primary bg-primary-container/20 px-3 py-1 rounded-full">+24% vs LY</span>
+</div>
+</div>
+<div class="flex items-end justify-between h-64 gap-4 px-4">
+<div class="flex flex-col items-center flex-1">
+<div class="chart-bar w-full bg-primary-container/30 rounded-t-lg" style="height: 40%"></div>
+<span class="mt-4 text-caption text-on-surface-variant">2020</span>
+</div>
+<div class="flex flex-col items-center flex-1">
+<div class="chart-bar w-full bg-primary-container/50 rounded-t-lg" style="height: 55%"></div>
+<span class="mt-4 text-caption text-on-surface-variant">2021</span>
+</div>
+<div class="flex flex-col items-center flex-1">
+<div class="chart-bar w-full bg-primary-container/70 rounded-t-lg" style="height: 70%"></div>
+<span class="mt-4 text-caption text-on-surface-variant">2022</span>
+</div>
+<div class="flex flex-col items-center flex-1">
+<div class="chart-bar w-full bg-primary rounded-t-lg" style="height: 95%"></div>
+<span class="mt-4 text-caption text-on-surface-variant">2023</span>
+</div>
+<div class="flex flex-col items-center flex-1">
+<div class="chart-bar w-full bg-secondary rounded-t-lg" style="height: 100%"></div>
+<span class="mt-4 text-caption text-on-surface-variant">2024</span>
+</div>
+</div>
+</div>
+<!-- CO2 Offset Gauge -->
+<div class="glass-card p-8 flex flex-col items-center justify-center relative">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-8 text-center">Estimated CO2 Offset</h3>
+<div class="relative w-48 h-48 mb-6">
+<svg class="w-full h-full transform -rotate-90">
+<circle class="text-surface-container-high" cx="96" cy="96" fill="transparent" r="80" stroke="currentColor" stroke-width="12"></circle>
+<circle class="text-primary circular-progress" cx="96" cy="96" fill="transparent" r="80" stroke="currentColor" stroke-linecap="round" stroke-width="12"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="text-3xl font-headline-lg text-primary">3.2k</span>
+<span class="text-caption text-on-surface-variant font-semibold">TONNES / YR</span>
+</div>
+</div>
+<p class="text-center font-body-md text-on-surface-variant px-4">Equivalent to taking <strong class="text-secondary">680 cars</strong> off the road annually.</p>
+</div>
+</section>
+<!-- Before & After Gallery -->
+<section class="mb-20">
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-8">Ecosystem Restoration</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="group cursor-pointer relative rounded-[32px] overflow-hidden glass-card p-2">
+<div class="relative aspect-video rounded-[24px] overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A split-screen composition showing a desolate, cracked arid landscape on the left and a lush, vibrant green forest with a flowing stream on the right. The style is high-end architectural photography with soft morning light and a high-key, fresh atmosphere that matches the Earth Revival brand identity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB016aMhQy04TJbPS4-dHvc9Hq-yG0us-4jjqBVgEB6TiTnVvrpwPcokTMq3zYstCsh1ZRPoTbRdPA7A89YjWxuqQjbMZgo-iTeLDt_IsrZDzvvrUs5f4ZojNUHoel2VGyUcGwhzcF44ahC6clh0hUebP93fuNHy1F3Q35HxhNbQ3NE1A9VHWyDQs5Ch9lm3bLV_Zogjnpdy0Q3DKUGqPbgOixwh4zimUZLwYeaYfAr0JFqColOiJNqNQ"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-8">
+<div>
+<span class="bg-white/20 backdrop-blur-md text-white text-caption px-3 py-1 rounded-full mb-2 inline-block">Location: Sahel Region</span>
+<h4 class="text-white font-headline-md">Desert Reclamation Project</h4>
+</div>
+</div>
+<div class="absolute top-4 left-4 bg-error text-white text-caption px-3 py-1 rounded-full font-bold">BEFORE</div>
+<div class="absolute top-4 right-4 bg-primary text-white text-caption px-3 py-1 rounded-full font-bold">AFTER 2 YEARS</div>
+</div>
+</div>
+<div class="group cursor-pointer relative rounded-[32px] overflow-hidden glass-card p-2">
+<div class="relative aspect-video rounded-[24px] overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Aerial view of a coastal area showing a comparison between a polluted, grey industrial shoreline and a restored mangrove forest with clear blue water and diverse birdlife. Minimalist, clean composition with soft, clinical lighting emphasizing environmental success and transparency." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAF0kh9pUqT-3DWmScKaLheJkm5jD9LqXpoq780oho9Ut2Frh_V5k4lAYFN1du-vZugXq_O-CjXTq_b4otDDJfWvLZALNmDnskozf9GkeboNs7VSxSim1S3HJ8Q55ZqKwLFzC1O4DiUuY-HhYNujvkVb69-SrOR1jj54KWFObjB5oXwje2nmxpOw3I3qMPshU-jikb1DrHtQVSZMaUk7ZzDeZgKED3LG2Crhh6Cxs3oHdbIntnstCSTYA"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-8">
+<div>
+<span class="bg-white/20 backdrop-blur-md text-white text-caption px-3 py-1 rounded-full mb-2 inline-block">Location: Coastal Mangroves</span>
+<h4 class="text-white font-headline-md">Blue Carbon Initiative</h4>
+</div>
+</div>
+<div class="absolute top-4 left-4 bg-error text-white text-caption px-3 py-1 rounded-full font-bold">BEFORE</div>
+<div class="absolute top-4 right-4 bg-primary text-white text-caption px-3 py-1 rounded-full font-bold">AFTER 3 YEARS</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Impact Stories (Cards) -->
+<section class="mb-20">
+<div class="flex justify-between items-end mb-8">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Recent Impact Stories</h2>
+<p class="text-on-surface-variant font-body-md">Real stories from our ground-level heroes.</p>
+</div>
+<button class="hidden md:flex items-center gap-2 text-primary font-bold hover:gap-3 transition-all">
+                    View All Stories <span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<!-- Story 1 -->
+<div class="glass-card overflow-hidden group">
+<div class="h-48 overflow-hidden relative">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="A group of smiling volunteers of various ethnicities planting saplings in a sunny park. They are wearing green Earth Revival t-shirts. The lighting is golden hour, warm and hopeful, reflecting a sense of community and proactive environmental stewardship." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDRN9gck7vwl1d_go6Q6G67wn_KCOTrEddHjcoJ5xcWGLCVq19GV6rEcgQrVqkyfbScARltA2PR3XiJSQE4MrWpu3i19y2lEw0Ksu3rWotkWOJWbAiz1s-tuFuVlj8wlOKrkCDlYR3bB2nibhm-asP8DZaL14qCiZAIQV_RGY2QOQ7fvX-mY7OCTPl_uEOnlZTRV4ejxkmgxfspATCa7s7_zUJDA_E1P8UjFvd25b62FnWuBeGRq2s8tg"/>
+</div>
+<div class="p-6">
+<span class="text-secondary font-bold text-caption uppercase tracking-wider">Community Drive</span>
+<h4 class="font-headline-md text-on-surface mt-2 mb-3">5,000 Saplings in Berlin City Park</h4>
+<p class="text-on-surface-variant text-body-md mb-4 line-clamp-2">Our local chapter organized a massive weekend drive involving 200 city residents...</p>
+<a class="text-primary font-semibold flex items-center gap-1 group/btn" href="#">
+                            Read More <span class="material-symbols-outlined text-sm group-hover/btn:translate-x-1 transition-transform" data-icon="chevron_right">chevron_right</span>
+</a>
+</div>
+</div>
+<!-- Story 2 -->
+<div class="glass-card overflow-hidden group">
+<div class="h-48 overflow-hidden relative">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="Close-up shot of a small green plant growing through a crack in a paved urban area, symbolizing resilience. The background shows a clean, modern sustainable city architecture. The visual style is editorial and crisp, with a palette of deep greens and soft greys." src="https://lh3.googleusercontent.com/aida-public/AB6AXuABVMpjBA54Rg5lGtff_TfDycagQGC0vrV3FMAwSoz7EQ5BZSoClUzprUJ7471YBf5DwGTpr-wXLt_CTC-sAaTTvd4rO5secj2oo3HgWp8OL24Y1UPe5LatUcMWvNEjlavOs2_44ujWdzIIp953BFH51BNbNKEkColIw7JcLSU9pO2VMXyQq3R8BQXZj42oSRYYHwnqzLhqzzrdYzikNSC_AcOwSK9Z-T_bWsjL2k87SsuczRXAJzdr2Q"/>
+</div>
+<div class="p-6">
+<span class="text-secondary font-bold text-caption uppercase tracking-wider">Urban Greening</span>
+<h4 class="font-headline-md text-on-surface mt-2 mb-3">Reclaiming the Concrete Jungle</h4>
+<p class="text-on-surface-variant text-body-md mb-4 line-clamp-2">How our micro-forest technique is lowering local temperatures by 2 degrees in Tokyo.</p>
+<a class="text-primary font-semibold flex items-center gap-1 group/btn" href="#">
+                            Read More <span class="material-symbols-outlined text-sm group-hover/btn:translate-x-1 transition-transform" data-icon="chevron_right">chevron_right</span>
+</a>
+</div>
+</div>
+<!-- Story 3 -->
+<div class="glass-card overflow-hidden group">
+<div class="h-48 overflow-hidden relative">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="A beautiful sunset over a vast reforested valley. Thousands of young trees are visible in neat rows, stretching towards the horizon. The sky is a mix of sky blue and soft orange. The image evokes peace, reliability, and long-term environmental impact." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBTO7i1Kpe-piOoKCVJ1pQEZpl5JDkDZ1tGH1rT4DM4CikV39acr_bf-GExej0I_giEExHA3HaNdZVKEA24vVXvABy-D8XOwvGbCWJ7dCNP91WX1VDj9bjaDsgZqDEJqwzzWV861MQcsE6IS3T4wxeUEHk6HktM0uuKb0tzPMCh1Z-c-IRi3v6-M5ibmjCHeS5u8veKu47oOe-N4hJcKFjcERLMR5lw9rk1NxHsqoA-1NY0jRKZuWr1Jw"/>
+</div>
+<div class="p-6">
+<span class="text-secondary font-bold text-caption uppercase tracking-wider">Major Milestone</span>
+<h4 class="font-headline-md text-on-surface mt-2 mb-3">100k Trees: A Journey of Faith</h4>
+<p class="text-on-surface-variant text-body-md mb-4 line-clamp-2">Looking back at three years of intense labor and the transformation of the Highland Valley.</p>
+<a class="text-primary font-semibold flex items-center gap-1 group/btn" href="#">
+                            Read More <span class="material-symbols-outlined text-sm group-hover/btn:translate-x-1 transition-transform" data-icon="chevron_right">chevron_right</span>
+</a>
+</div>
+</div>
+</div>
+</section>
+<!-- How You Can Help (Animated Cards) -->
+<section class="bg-primary rounded-[40px] p-12 relative overflow-hidden">
+
+<div class="relative z-10">
+<h2 class="font-headline-lg text-headline-lg text-white mb-12 text-center">How You Can Help</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-8 text-white hover:bg-white/20 transition-all cursor-pointer group">
+<div class="w-12 h-12 bg-primary-fixed text-primary rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined" data-icon="volunteer_activism">volunteer_activism</span>
+</div>
+<h4 class="text-headline-md mb-3">Volunteer</h4>
+<p class="text-white/80 mb-6">Join our weekend drives or lead a chapter in your own city.</p>
+<button class="w-full py-3 bg-white text-primary font-bold rounded-xl active:scale-95 transition-transform">Get Started</button>
+</div>
+<div class="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-8 text-white hover:bg-white/20 transition-all cursor-pointer group">
+<div class="w-12 h-12 bg-primary-fixed text-primary rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+</div>
+<h4 class="text-headline-md mb-3">Donate</h4>
+<p class="text-white/80 mb-6">$1 plants one tree. Every contribution directly funds our fieldwork.</p>
+<button class="w-full py-3 bg-white text-primary font-bold rounded-xl active:scale-95 transition-transform">Donate Now</button>
+</div>
+<div class="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-8 text-white hover:bg-white/20 transition-all cursor-pointer group">
+<div class="w-12 h-12 bg-primary-fixed text-primary rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined" data-icon="share">share</span>
+</div>
+<h4 class="text-headline-md mb-3">Advocate</h4>
+<p class="text-white/80 mb-6">Spread the word and invite your network to join the pulse.</p>
+<button class="w-full py-3 bg-white text-primary font-bold rounded-xl active:scale-95 transition-transform">Share Dashboard</button>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 bg-white/70 dark:bg-black/40 backdrop-blur-[20px] border-t border-white/40 dark:border-white/10 flex justify-around items-center h-20 pb-safe px-4 rounded-t-xl shadow-[0px_-10px_30px_rgba(46,125,50,0.05)]">
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:opacity-80 transition-opacity" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-label-md text-label-md mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-secondary-container dark:bg-secondary text-on-secondary-container dark:text-on-secondary rounded-full px-4 py-1 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="monitoring">monitoring</span>
+<span class="font-label-md text-label-md mt-1">Impact</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:opacity-80 transition-opacity" href="#">
+<span class="material-symbols-outlined" data-icon="volunteer_activism">volunteer_activism</span>
+<span class="font-label-md text-label-md mt-1">Volunteer</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:opacity-80 transition-opacity" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-label-md text-label-md mt-1">Profile</span>
+</a>
+</nav>
+<!-- Footer -->
+<footer class="bg-surface-container dark:bg-inverse-surface border-t border-surface-container-high dark:border-surface-dim">
+<div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-12 flex flex-col md:flex-row justify-between items-center gap-8">
+<div class="flex flex-col items-center md:items-start">
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-primary text-2xl" data-icon="eco">eco</span>
+<span class="font-headline-md text-headline-md font-bold text-primary">EcoPulse</span>
+</div>
+<p class="text-on-surface-variant text-body-md text-center md:text-left max-w-sm">
+                    © 2024 EcoPulse Initiative. All rights reserved. Restoring the earth one pulse at a time.
+                </p>
+</div>
+<div class="flex flex-wrap justify-center gap-6">
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-200 font-body-md" href="#">Privacy Policy</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-200 font-body-md" href="#">Terms of Service</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-200 font-body-md" href="#">Newsletter</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-200 font-body-md" href="#">Contact</a>
+</div>
+</div>
+</footer>
+<script>
+        // Simple Counter Animation
+        function animateValue(obj, start, end, duration) {
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                const value = Math.floor(progress * (end - start) + start);
+                obj.innerHTML = value.toLocaleString();
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            };
+            window.requestAnimationFrame(step);
+        }
+
+        window.onload = () => {
+            const trees = document.getElementById("counter-trees");
+            const volunteers = document.getElementById("counter-volunteers");
+            const events = document.getElementById("counter-events");
             
-        </nav>
-    </header>
-  
-    <main>
-        <section id="home" class="section1">
-            <h1>Exam Seating Plan Generator</h1>
-            <fieldset class="fieldset1">
-                <legend class="legend1">Enter Details</legend>
-                <ul>
-                    <li><a href="#d1">Enter Room Details</a></li>
-                    <li><a href="#d2">Enter Class/Stream Details</a></li>
-                    <li><a href="#d3">Enter Student Details</a></li>
-                </ul>
-            </fieldset>
-        </section>
-
-        <section class="container" id="d1">
-            <h2>Enter Room Details</h2>
-            <input type="text" id="roomNumber" placeholder="Enter Room Number">
-            <input type="number" id="numberOfSeats" placeholder="Enter Number of Seats">
-            <button class="button" onclick="addRoom()">Add Room</button>
-            <table class="table1">
-                <thead>
-                    <tr>
-                        <th>Sr.No.</th>
-                        <th>Room Number</th>
-                        <th>Number of Seats</th>
-                    </tr>
-                </thead>
-                <tbody id="roomTableBody">
-                   
-                </tbody>
-            </table>
-        </section>
-
-        <!-- <section class="container" id="d2">
-            <h2>Enter Class/Stream Details</h2>
-            <input type="text" id="classStream" placeholder="Enter Class/Stream Name">
-            <button class="button" onclick="addClassStream()">Add Class/Stream</button>
-            <table class="table1">
-                <thead>
-                    <tr>
-                        <th>Sr.No.</th>
-                        <th>Class/Stream</th>
-                    </tr>
-                </thead>
-                <tbody id="classStreamTableBody">
-                    
-                </tbody>
-            </table>
-        </section> -->
-
-        <section class="container" id="d3">
-            <h2>Enter Student Details</h2>
-            <label for="studentClassStream">Class/Stream:</label><br><br>
-            <input type="text" id="studentClassStream" placeholder="Enter Class/Stream">
-            <br><label for="totalStudents">Total Students:</label><br>
-            <br><input type="number" id="totalStudents" placeholder="Enter Total Students">
-            <br><br><label for="startingRollNo">Starting Roll No.:</label><br>
-            <br><input type="text" id="startingRollNo" placeholder="Enter Starting Roll No.">
-            <button class="button" onclick="addStudent()">Add Student</button>
-            <table class="table1">
-                <thead>
-                    <tr>
-                        <th>Sr.No.</th>
-                        <th>Class/Stream</th>
-                        <th>Total Students</th>
-                        <th>Starting Roll No.</th>
-                    </tr>
-                </thead>
-                <tbody id="studentTableBody">
-                 
-                </tbody>
-            </table>
-        </section>
-
-        <section class="container" id="generate-plan">
-            <h2>Generate Seating Plan</h2>
-            <button class="button" onclick="generateSeatingPlan()">Generate Plan</button>
-            <table class="table1" id="seatingPlanTable">
-                <thead>
-                    <tr>
-                        <th>Room Number</th>
-                        <th>Seat No.</th>
-                        <th>Roll No.</th>
-                        <th>Class/Stream</th>
-                    </tr>
-                </thead>
-                <tbody>
-                  
-                </tbody>
-            </table>
-        </section>
-    </main>
-
-    <script src="2nd.js"></script>
-</body>
-</html>
+            animateValue(trees, 0, 124500, 2000);
+            animateValue(volunteers, 0, 8920, 2000);
+            animateValue(events, 0, 452, 2000);
+        };
+    </script>
+</body></html>
